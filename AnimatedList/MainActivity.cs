@@ -2,19 +2,23 @@
 using Android.Widget;
 using Android.OS;
 using Android.Content;
+using AnimatedList.Classes;
+using System.Collections.Generic;
 
 namespace AnimatedList
 {
-    [Activity(Label = "AnimatedList", MainLauncher = true)]
+    [Activity(Label = "AnimatedList", MainLauncher = false)]
     public class MainActivity : Activity
     {
         private Button mBtnGoToList;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
+
 
             mBtnGoToList = FindViewById<Button>(Resource.Id.btnGoToList);
 
