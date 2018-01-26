@@ -23,6 +23,7 @@ namespace AnimatedList
         private LinearLayout mContainer;
         private bool mAnimateDown;
         private bool mAnimating;
+        private FriendsAdapter mAdapter;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -36,6 +37,7 @@ namespace AnimatedList
             mContainer = FindViewById<LinearLayout>(Resource.Id.llContainer);
 
             mSearch.Alpha = 0;
+            mSearch.TextChanged += MSearch_TextChanged;
 
             mFriends = new List<Friend>();
             mFriends.Add(new Friend { FirstName = "Arnold", LastName= "McFlight", Age = "30", Gender="male" });
@@ -47,8 +49,19 @@ namespace AnimatedList
             mFriends.Add(new Friend { FirstName = "Jason", LastName = "Burn", Age = "37", Gender = "male" });
             mFriends.Add(new Friend { FirstName = "Sylvestre", LastName = "Stallone", Age = "38", Gender = "male" });
 
-            FriendsAdapter adapter = new FriendsAdapter(this, Resource.Layout.row_friend, mFriends);
-            mListView.Adapter = adapter;
+            mAdapter  = new FriendsAdapter(this, Resource.Layout.row_friend, mFriends);
+            mListView.Adapter = mAdapter;
+        }
+
+        private void MSearch_TextChanged(object sender, Android.Text.TextChangedEventArgs e)
+        {
+            List<Friend> searchedFriends = (from friend in mFriends
+                                            where friend.FirstName.Contains(mSearch.Text, StringComparison.OrdinalIgnoreCase) || friend.LastName.Contains(mSearch.Text, StringComparison.OrdinalIgnoreCase)
+                                            || friend.Age.Contains(mSearch.Text, StringComparison.OrdinalIgnoreCase) || friend.Gender.Contains(mSearch.Text, StringComparison.OrdinalIgnoreCase)
+                                            select friend).ToList<Friend>();
+
+            mAdapter = new FriendsAdapter(this, Resource.Layout.row_friend ,searchedFriends);
+            mListView.Adapter = mAdapter;
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)

@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnimatedListActivity.cs" />
+    <Compile Include="Classes\ExtMethods.cs" />
     <Compile Include="Classes\Friend.cs" />
     <Compile Include="Classes\FriendsAdapter.cs" />
     <Compile Include="Classes\MyAnimation.cs" />
